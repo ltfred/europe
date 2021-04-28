@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// 2021-04-28 16  --> "2021042816"
 func GetHourDigitString(t time.Time) string {
 	var year, month, day = t.Date()
 	var hour = t.Hour()
@@ -35,4 +36,18 @@ func GetWeekByDate(t time.Time) int {
 	}
 	return week
 
+}
+
+// 判断是否为相同的一天
+func IsSameDay(a, b time.Time) bool {
+	var aYear, aMonth, aDay = a.Date()
+	var bYear, bMonth, bDay = b.Date()
+	return aYear == bYear && aMonth == bMonth && aDay == bDay
+}
+
+// 获取当天0点和23:59:59
+func GetZeroAndLastTime(d time.Time) (zeroTime, lastTime time.Time) {
+	zeroTime = time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
+	lastTime = time.Date(d.Year(), d.Month(), d.Day(), 23, 59, 59, 0, d.Location())
+	return
 }

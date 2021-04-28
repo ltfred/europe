@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 2021-04-28 16  --> "2021042816"
 func TestGetHourDigitString(t *testing.T) {
 	date, err := time.Parse("2006-01-02 15", "2021-04-28 16")
 	assert.Equal(t, nil, err)
@@ -18,6 +17,29 @@ func TestGetHourDigitString(t *testing.T) {
 func TestGetWeekByDate(t *testing.T) {
 	date, err := time.Parse("2006-01-02", "2021-04-28")
 	assert.Equal(t, nil, err)
-	weeky := GetWeekByDate(date)
-	assert.Equal(t, 18, weeky)
+	week := GetWeekByDate(date)
+	assert.Equal(t, 18, week)
+}
+
+func TestIsSameDay(t *testing.T) {
+	date1, _ := time.Parse("2006-01-02", "2021-04-28")
+	date2, _ := time.Parse("2006-01-02", "2021-04-29")
+	assert.False(t, IsSameDay(date1, date2))
+
+	date1, _ = time.Parse("2006-01-02", "2021-04-28")
+	date2, _ = time.Parse("2006-01-02", "2021-04-28")
+	assert.True(t, IsSameDay(date1, date2))
+
+	date1, _ = time.Parse("2006-01-02", "2020-04-28")
+	date2, _ = time.Parse("2006-01-02", "2021-04-28")
+	assert.False(t, IsSameDay(date1, date2))
+}
+
+func TestGetZeroTime(t *testing.T) {
+	date, _ := time.Parse("2006-01-02", "2021-04-28")
+	zeroTime, lastTime := GetZeroAndLastTime(date)
+	zero, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 00:00:00")
+	last, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 23:59:59")
+	assert.Equal(t, zero, zeroTime)
+	assert.Equal(t, last, lastTime)
 }
