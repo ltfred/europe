@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -47,4 +48,36 @@ func GetZeroAndLastTime(d time.Time) (zeroTime, lastTime time.Time) {
 	zeroTime = time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
 	lastTime = time.Date(d.Year(), d.Month(), d.Day(), 23, 59, 59, 0, d.Location())
 	return
+}
+
+// TimeToStr 时间类型转字符串
+func TimeToStr(t time.Time, format ...string) string {
+	if len(format) > 1 {
+		panic(errors.New("只支持一个时间格式"))
+	}
+	if len(format) == 1 {
+		return t.Format(format[0])
+	}
+	return t.Format("2006-01-02 15:04:05")
+}
+
+// StrToTime 字符串转时间类型
+func StrToTime(tStr string, format ...string) (t time.Time, err error) {
+	if len(format) > 1 {
+		panic(errors.New("只支持一个时间格式"))
+	}
+	if len(format) == 1 {
+		return time.Parse(format[0], tStr)
+	}
+	return time.Parse("2006-01-02 15:04:05", tStr)
+}
+
+// 获取明天的时间
+func Tomorrow(t time.Time) time.Time {
+	return t.AddDate(0, 0, 1)
+}
+
+// 获取昨天的时间
+func Yesterday(t time.Time) time.Time {
+	return t.AddDate(0, 0, -1)
 }
