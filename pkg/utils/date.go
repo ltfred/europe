@@ -17,7 +17,6 @@ func GetHourDigitString(t time.Time) string {
 func GetWeekByDate(t time.Time) ( week int) {
 	yearDay := t.YearDay()
 	yearFirstDay := t.AddDate(0, 0, -yearDay+1)
-	fmt.Println(yearFirstDay)
 	firstDayInWeek := int(yearFirstDay.Weekday())
 	firstWeekDays := 1
 	if firstDayInWeek != 0 {
