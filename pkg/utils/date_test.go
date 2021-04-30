@@ -72,3 +72,20 @@ func TestYesterday(t *testing.T) {
 	date2, _ := time.Parse("2006-01-02", "2021-04-29")
 	assert.Equal(t, date1, Yesterday(date2))
 }
+
+func TestTimeCombine(t *testing.T) {
+	dateTime, _ := time.Parse("2006-01-02", "2021-04-28")
+	start, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 00:00:00")
+	end, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 23:59:59")
+	startTime, endTime := TimeCombine(dateTime)
+	assert.Equal(t, start, startTime)
+	assert.Equal(t, end, endTime)
+
+	startTime, endTime = TimeCombine(dateTime, WithDelta(3))
+	end, _ = time.Parse("2006-01-02 15:04:05", "2021-05-01 23:59:59")
+	assert.Equal(t, end, endTime)
+
+	startTime, endTime = TimeCombine(dateTime, WithEndTime(dateTime.AddDate(0,0,1)))
+	end, _ = time.Parse("2006-01-02 15:04:05", "2021-04-29 23:59:59")
+	assert.Equal(t, end, endTime)
+}
