@@ -47,13 +47,17 @@ func TestGetZeroTime(t *testing.T) {
 func TestTimeToStr(t *testing.T) {
 	date1, _ := time.Parse("2006-01-02", "2021-04-28")
 	assert.Equal(t, "2021-04-28 00:00:00", TimeToStr(date1))
-	assert.Equal(t, "2021-04-28 00", TimeToStr(date1, "2006-01-02 15"))
+	assert.Equal(t, "2021-04-28 00", TimeToStr(date1, WithFormat("2006-01-02 15")))
 }
 
 func TestStrToTime(t *testing.T) {
 	zero, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 00:00:00")
 	ti, err := StrToTime("2021-04-28 00:00:00")
 	assert.Equal(t, nil, err)
+	assert.Equal(t, zero, ti)
+
+	zero, _ = time.Parse("2006-01-02", "2021-04-28")
+	ti, err = StrToTime("2021-04-28", WithFormat("2006-01-02"))
 	assert.Equal(t, zero, ti)
 }
 

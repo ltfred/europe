@@ -1,10 +1,29 @@
 package utils
 
 import (
-	"errors"
 	"fmt"
 	"time"
 )
+
+type DateFormat struct {
+	format string
+}
+
+type Handler interface {
+	parse(format *DateFormat)
+}
+
+type HandleFunc func(format *DateFormat)
+
+func (f HandleFunc) parse(format *DateFormat){
+	f(format)
+}
+
+func WithFormat(f string) HandleFunc {
+	return func(format *DateFormat) {
+		format.format = f
+	}
+}
 
 // GetHourDigitString 2021-04-28 16  --> "2021042816"
 func GetHourDigitString(t time.Time) string {
@@ -13,7 +32,7 @@ func GetHourDigitString(t time.Time) string {
 	return fmt.Sprintf("%04d%02d%02d%02d", year, month, day, hour)
 }
 
-// GetWeekByDate 获取当前时间是第几周
+// GetWeekByDate 获取当前时间是今年第几周
 func GetWeekByDate(t time.Time) ( week int) {
 	yearDay := t.YearDay()
 	yearFirstDay := t.AddDate(0, 0, -yearDay+1)
@@ -50,33 +69,39 @@ func GetZeroAndLastTime(d time.Time) (zeroTime, lastTime time.Time) {
 }
 
 // TimeToStr 时间类型转字符串
-func TimeToStr(t time.Time, format ...string) string {
-	if len(format) > 1 {
-		panic(errors.New("只支持一个时间格式"))
+// TimeToStr(time.Now())
+// TimeToStr(time.Now(), WithFormat("2006-01-02"))
+func TimeToStr(t time.Time, format ...Handler) string {
+	f := &DateFormat{}
+	for _, v := range format {
+		v.parse(f)
 	}
-	if len(format) == 1 {
-		return t.Format(format[0])
+	if f.format != "" {
+		return t.Format(f.format)
 	}
 	return t.Format("2006-01-02 15:04:05")
 }
 
 // StrToTime 字符串转时间类型
-func StrToTime(tStr string, format ...string) (t time.Time, err error) {
-	if len(format) > 1 {
-		panic(errors.New("只支持一个时间格式"))
+// StrToTime("2021-05-01")
+// StrToTime("2021-05-01 15:10:30", WithFormat("2006-01-02 15:04:05"))
+func StrToTime(tStr string, format ...Handler) (t time.Time, err error) {
+	f := &DateFormat{}
+	for _, v := range format {
+		v.parse(f)
 	}
-	if len(format) == 1 {
-		return time.Parse(format[0], tStr)
+	if f.format != "" {
+		return time.Parse(f.format, tStr)
 	}
 	return time.Parse("2006-01-02 15:04:05", tStr)
 }
 
-// 获取明天的时间
+// Tomorrow 获取明天的时间
 func Tomorrow(t time.Time) time.Time {
 	return t.AddDate(0, 0, 1)
 }
 
-// 获取昨天的时间
+// Yesterday 获取昨天的时间
 func Yesterday(t time.Time) time.Time {
 	return t.AddDate(0, 0, -1)
 }
