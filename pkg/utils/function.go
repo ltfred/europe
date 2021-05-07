@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/hex"
 	"math"
+	"os"
 	"regexp"
 	"strings"
 
@@ -52,4 +53,13 @@ func VerifyIdCard(idCard string) bool {
 func GetUUID() string {
 	uid, _ := uuid.New().MarshalBinary()
 	return hex.EncodeToString(uid)
+}
+
+// GetEnv 获取环境变量,不存在返回默认值
+func GetEnv(key, defaultValue string) (value string) {
+	value = os.Getenv(key)
+	if len(value) == 0 {
+		value = defaultValue
+	}
+	return
 }

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -39,4 +40,12 @@ func TestGetUUID(t *testing.T) {
 
 func TestVerifyIdCard(t *testing.T) {
 	assert.True(t, true, VerifyIdCard("513436200004297890"))
+}
+
+func TestGetEnv(t *testing.T) {
+	assert.Equal(t, "111", GetEnv("test", "111"))
+
+	err := os.Setenv("test", "222")
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "222", GetEnv("test", "111"))
 }
