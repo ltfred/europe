@@ -35,15 +35,6 @@ func TestIsSameDay(t *testing.T) {
 	assert.False(t, IsSameDay(date1, date2))
 }
 
-func TestGetZeroTime(t *testing.T) {
-	date, _ := time.Parse("2006-01-02", "2021-04-28")
-	zeroTime, lastTime := GetZeroAndLastTime(date)
-	zero, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 00:00:00")
-	last, _ := time.Parse("2006-01-02 15:04:05", "2021-04-28 23:59:59")
-	assert.Equal(t, zero, zeroTime)
-	assert.Equal(t, last, lastTime)
-}
-
 func TestTimeToStr(t *testing.T) {
 	date1, _ := time.Parse("2006-01-02", "2021-04-28")
 	assert.Equal(t, "2021-04-28 00:00:00", TimeToStr(date1))

@@ -77,13 +77,6 @@ func IsSameDay(a, b time.Time) bool {
 	return aYear == bYear && aMonth == bMonth && aDay == bDay
 }
 
-// GetZeroAndLastTime 获取当天0点和23:59:59
-func GetZeroAndLastTime(d time.Time) (zeroTime, lastTime time.Time) {
-	zeroTime = time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
-	lastTime = time.Date(d.Year(), d.Month(), d.Day(), 23, 59, 59, 0, d.Location())
-	return
-}
-
 // TimeCombine 获取一段日期的起止时间
 // start, end := TimeCombine(time.Now())
 // yesterday, today := TimeCombine(time.Now(), WithDelta(-1))
