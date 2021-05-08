@@ -94,19 +94,19 @@ func TimeCombine(startTime time.Time, opts ...Handler) (start time.Time, end tim
 			end = startTime.AddDate(0, 0, f.delta)
 		} else {
 			end = startTime
-			start = startTime.AddDate(0,0, f.delta)
+			start = startTime.AddDate(0, 0, f.delta)
 		}
-		start = time.Date(start.Year(), start.Month(), start.Day(), 0, 0,0,0, start.Location())
-		end = time.Date(end.Year(), end.Month(), end.Day(), 23, 59,59,0, end.Location())
+		start = time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, start.Location())
+		end = time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 0, end.Location())
 		return
 	}
 	if f.endTime == *new(time.Time) {
-		start = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 0, 0,0,0, startTime.Location())
-		end = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 23, 59,59,0, startTime.Location())
+		start = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 0, 0, 0, 0, startTime.Location())
+		end = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 23, 59, 59, 0, startTime.Location())
 		return
 	}
-	start = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 0, 0,0,0, startTime.Location())
-	end = time.Date(f.endTime.Year(), f.endTime.Month(), f.endTime.Day(), 23, 59,59,0, startTime.Location())
+	start = time.Date(startTime.Year(), startTime.Month(), startTime.Day(), 0, 0, 0, 0, startTime.Location())
+	end = time.Date(f.endTime.Year(), f.endTime.Month(), f.endTime.Day(), 23, 59, 59, 0, startTime.Location())
 	return
 }
 

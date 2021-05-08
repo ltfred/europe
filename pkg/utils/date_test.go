@@ -76,7 +76,7 @@ func TestTimeCombine(t *testing.T) {
 	end, _ = time.Parse("2006-01-02 15:04:05", "2021-05-01 23:59:59")
 	assert.Equal(t, end, endTime)
 
-	startTime, endTime = TimeCombine(dateTime, WithEndTime(dateTime.AddDate(0,0,1)))
+	startTime, endTime = TimeCombine(dateTime, WithEndTime(dateTime.AddDate(0, 0, 1)))
 	end, _ = time.Parse("2006-01-02 15:04:05", "2021-04-29 23:59:59")
 	assert.Equal(t, end, endTime)
 }

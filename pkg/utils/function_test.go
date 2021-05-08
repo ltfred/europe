@@ -29,17 +29,13 @@ func TestFuncValueIsInSlice(t *testing.T) {
 }
 
 func TestFuncKeyIsInMap(t *testing.T) {
-	m := map[string]interface{}{"key1": 1, "key2":2}
+	m := map[string]interface{}{"key1": 1, "key2": 2}
 	assert.True(t, true, KeyIsInMap("key1", m))
 	assert.False(t, false, KeyIsInMap("key3", m))
 }
 
 func TestGetUUID(t *testing.T) {
 	fmt.Println(GetUUID())
-}
-
-func TestVerifyIdCard(t *testing.T) {
-	assert.True(t, true, VerifyIdCard("513436200004297890"))
 }
 
 func TestGetEnv(t *testing.T) {
