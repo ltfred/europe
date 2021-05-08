@@ -3,6 +3,8 @@ package utils
 import (
 	"regexp"
 	"strings"
+
+	uuid "github.com/satori/go.uuid"
 )
 
 // IsIdCard 身份证号码验证
@@ -24,4 +26,13 @@ func IsMobile(mobile string) bool {
 	regular := "^(1[3-9])\\d{9}$"
 	reg := regexp.MustCompile(regular)
 	return reg.MatchString(mobile)
+}
+
+// IsUUID 验证是否是UUID
+func IsUUID(u string) bool {
+	_, err := uuid.FromString(u)
+	if err != nil {
+		return true
+	}
+	return false
 }
