@@ -80,13 +80,14 @@ func IsSameDay(a, b time.Time) bool {
 // TimeCombine 获取一段日期的起止时间
 // start, end := TimeCombine(time.Now())
 // yesterday, today := TimeCombine(time.Now(), WithDelta(-1))
-func TimeCombine(startTime time.Time, opts ...Handler) (start time.Time, end time.Time) {
+func TimeCombine(startTime time.Time, opts ...Handler) (start time.Time, end time.Time, err error) {
 	f := &Date{}
 	for _, v := range opts {
 		v.parse(f)
 	}
 	if f.delta != 0 && f.endTime != *new(time.Time) {
-		panic(errors.New("can not specify end_date and delta_days at the same time"))
+		err = errors.New("can not specify end_date and delta_days at the same time")
+		return
 	}
 	if f.delta != 0 {
 		if f.delta >= 0 {
