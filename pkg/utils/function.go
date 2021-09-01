@@ -2,9 +2,12 @@ package utils
 
 import (
 	"encoding/hex"
-	"github.com/google/uuid"
 	"math"
 	"os"
+	"strconv"
+	"strings"
+
+	"github.com/google/uuid"
 )
 
 // Round 返回将 val 根据指定精度 precision（十进制小数点后数字的数目）进行四舍五入的结果。precision 也可以是负数或零。
@@ -45,4 +48,17 @@ func GetEnv(key, defaultValue string) (value string) {
 		value = defaultValue
 	}
 	return
+}
+
+// GetFloatDecimalNumByStr 获取浮点数的小数位数
+func GetFloatDecimalNumByStr(numStr string) (int, error) {
+	_, err := strconv.ParseFloat(numStr, 64)
+	if err != nil {
+		return 0, err
+	}
+	arr := strings.Split(numStr, ".")
+	if len(arr) < 2 {
+		return 0, nil
+	}
+	return len(arr[1]), nil
 }

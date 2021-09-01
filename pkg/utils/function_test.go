@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"testing"
 
@@ -44,4 +45,12 @@ func TestGetEnv(t *testing.T) {
 	err := os.Setenv("test", "222")
 	assert.Equal(t, nil, err)
 	assert.Equal(t, "222", GetEnv("test", "111"))
+}
+
+func TestGetFloatDecimalNumByStr(t *testing.T) {
+	str, err := GetFloatDecimalNumByStr("3.141")
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	assert.Equal(t, 3, str)
 }
